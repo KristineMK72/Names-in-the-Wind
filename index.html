@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Story Map: Missing and Murdered Indigenous Women (MMIW)</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f4f4; color: #333; }
+        #container { max-width: 1200px; margin: 0 auto; }
+        section { padding: 40px 20px; margin: 20px 0; background: white; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        h1, h2 { color: #8B0000; } /* Dark red for awareness */
+        #map { height: 400px; margin: 20px 0; border: 1px solid #ccc; border-radius: 4px; }
+        .story-popup { max-width: 200px; }
+        ul { list-style-type: none; padding: 0; }
+        li { margin: 10px 0; padding: 10px; background: #f9f9f9; border-left: 4px solid #8B0000; }
+        a { color: #8B0000; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <section id="intro">
+            <h1>The Silent Crisis: Missing and Murdered Indigenous Women</h1>
+            <p>The MMIW crisis is a form of gender-based violence rooted in colonialism, where Indigenous women face homicide rates up to six times higher than non-Indigenous women. In the U.S., over 5,700 reports of missing Native women were logged in 2016 alone, yet many go underreported due to jurisdictional gaps on tribal lands. This isn't isolated—it's genocide, as declared by Canada's 2019 National Inquiry.</p>
+            <p><em>Image placeholder: Red shoes or dresses symbolizing the lost.</em></p>
+            <p>Let's honor their stories by mapping the places they were last seen.</p>
+        </section>
+
+        <section id="history">
+            <h2>Historical Roots: From Colonialism to "Lands of Impunity"</h2>
+            <p>Generations of trauma from residential schools and policies like the Major Crimes Act have created "lands of impunity" where non-Native perpetrators often evade justice—67% of assaults on Native women involve non-Native offenders. In Canada, the Highway of Tears (BC's Highway 16) has claimed at least 19 lives since 1969, many hitchhikers ignored by police.</p>
+            <p><em>Quote: "This is race, identity, and gender-based genocide." – National Inquiry Report.</em></p>
+        </section>
+
+        <section id="stories">
+            <h2>Their Stories: Voices on the Map</h2>
+            <p>Behind the stats are daughters, mothers, and warriors. Explore the map below for key cases.</p>
+            <div id="map"></div>
+            <ul>
+                <li><strong>Tina Fontaine, 15 (Winnipeg, Manitoba, 2014)</strong>: An Anishinaabe girl found in the Red River, wrapped in plastic—her death sparked "Drag the Red" searches. Last seen after child welfare involvement; killer acquitted despite evidence.</li>
+                <li><strong>Olivia Lone Bear (North Dakota, 2017)</strong>: Blackfeet Nation member whose body was found in a submerged car nine months after vanishing. Ruled suspicious, but no arrests—family questions the investigation.</li>
+                <li><strong>Stacy Hill, 17 (Red Lake Indian Reservation, Minnesota, 2009)</strong>: Ojibwe teen found murdered after a night out; case stalled due to limited resources on the rez.</li>
+                <li><strong>Pepita Redhair, 27 (Albuquerque, New Mexico, 2020)</strong>: Navajo woman feared trafficked; last seen leaving a shelter. Family pleads for tips amid urban Indigenous vulnerabilities.</li>
+                <li><strong>Ashley Loring HeavyRunner (Blackfeet Nation, Montana, 2017)</strong>: Advocated for MMIW before disappearing; her case exposed FBI delays in rural searches.</li>
+                <li><strong>Jermain Charlo (Missoula, Montana, 2018)</strong>: Salish woman vanished after a night out; podcast "Stolen" details cross-jurisdictional hurdles.</li>
+                <li><strong>Highway of Tears (British Columbia, Canada)</strong>: A 719-km corridor where at least 18 Indigenous women have been murdered or gone missing since 1969.</li>
+            </ul>
+            <p><em>For more cases, draw from CBC's Case Explorer (250+ unsolved in Canada) or BIA lists.</em></p>
+        </section>
+
+        <section id="action">
+            <h2>Call to Action: Healing and Change</h2>
+            <p>Support starts locally: Contact the Missing and Murdered Unit (BIA) or join marches like Walk 4 Justice. Demand better data via Savanna's Act and amplify #MMIW. Resources: <a href="https://www.uihi.org/mmiw-database-overview/" target="_blank">UIHI Database</a> for U.S. cases; <a href="https://www.nwac.ca/" target="_blank">NWAC</a> for Canada.</p>
+            <p><em>End with hope: Embed a video of Indigenous women leading healing circles.</em></p>
+        </section>
+    </div>
+
+    <script>
+        // Initialize the map
+        const map = L.map('map').setView([50, -100], 4); // Center on North America
+
+        // Add OpenStreetMap tile layer
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        // Add markers with popups
+        const markers = [
+            { coords: [49.895077, -97.138451], title: 'Tina Fontaine', desc: 'Anishinaabe girl found in the Red River, 2014.' },
+            { coords: [47.7392, -102.2732], title: 'Olivia Lone Bear', desc: 'Body found in submerged car, Fort Berthold, 2017.' },
+            { coords: [48.1530, -95.1013], title: 'Stacy Hill', desc: 'Murdered after night out, Red Lake, 2009.' },
+            { coords: [35.106766, -106.629181], title: 'Pepita Redhair', desc: 'Feared trafficked, Albuquerque, 2020.' },
+            { coords: [48.7561, -113.0198], title: 'Ashley Loring HeavyRunner', desc: 'Advocated for MMIW, Blackfeet Nation, 2017.' },
+            { coords: [46.8787, -113.9966], title: 'Jermain Charlo', desc: 'Vanished after night out, Missoula, 2018.' },
+            { coords: [53.9171, -122.7497], title: 'Highway of Tears', desc: '719-km corridor of disappearances since 1969.' }
+        ];
+
+        markers.forEach(marker => {
+            L.marker(marker.coords).addTo(map)
+                .bindPopup(`<div class="story-popup"><strong>${marker.title}</strong><br>${marker.desc}</div>`);
+        });
+
+        // Fit bounds to show all markers
+        const group = new L.featureGroup(markers.map(m => L.marker(m.coords)));
+        map.fitBounds(group.getBounds());
+    </script>
+</body>
+</html>
