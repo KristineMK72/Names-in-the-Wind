@@ -49,7 +49,24 @@
     .popup-card { background: #0c0c0c; padding: 8px; border-radius: 8px; color: #fff; max-width: 280px; }
     .big-overlay { position: absolute; inset: 0; pointer-events: none; z-index: 800; display: flex; align-items: flex-start; justify-content: flex-end; padding: 18px; }
     .notice { max-width: 420px; background: rgba(0,0,0,0.65); backdrop-filter: blur(2px); padding: 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.03); font-size: 13px; color: var(--muted); }
-    @media(max-width:920px) { #app { grid-template-columns: 1fr; grid-template-rows: 1fr auto; } #sidebar { order: 2; } #right { order: 1; } }
+    
+    /* === THIS IS THE MOBILE FIX === */
+    @media(max-width:920px) { 
+      #app { 
+        grid-template-columns: 1fr; 
+        grid-template-rows: 60vh auto; /* Map row (60% screen height), then content row (auto height) */
+        height: auto; /* THIS IS THE KEY: Allows the whole page to scroll */
+      } 
+      #right { 
+        order: 1; 
+        height: 100%; /* Make sure map container fills its grid row */
+      }
+      #sidebar { 
+        order: 2; 
+        height: auto; /* Remove fixed height, let it be as tall as content */
+        overflow: visible; 
+      } 
+    }
   </style>
 </head>
 <body>
@@ -247,7 +264,7 @@ const casesGeoJSON = {
 "status": "Homicide",
 "ethnicity": "Indigenous",
 "note": "15-year-old vanished February 2008, Prince George, BC. Loved poetry; remains found October 2008 off Hwy 97. Slow police response criticized; sparked BC MMIWG plan.",
-"source": "https://highwayoftears.org/"
+"source": "https"
 },
 "geometry": {"type": "Point", "coordinates": [-122.7497, 53.9171]}
 },
@@ -275,7 +292,7 @@ const casesGeoJSON = {
 "status": "Homicide",
 "ethnicity": "Indigenous",
 "note": "15-year-old found in Red River, Winnipeg, MB, 2014. Loved dancing; child welfare failed her. Sparked 'Drag the Red' and national inquiry. Killer acquitted.",
-"source": "https://www.cbc.ca/missingandmurdered/mmiw/profiles/tina-michelle-fontaine"
+"source": "httpsics"
 },
 "geometry": {"type": "Point", "coordinates": [-97.13845, 49.89508]}
 },
@@ -290,7 +307,7 @@ const casesGeoJSON = {
 "status": "Homicide",
 "ethnicity": "Indigenous",
 "note": "22-year-old, pregnant, vanished August 2017, Fargo, ND. Loved her family; body found in river. Convictions secured; case led to Savanna’s Act for better data.",
-"source": "https://www.uihi.org/mmiw-database-overview/"
+"source": "https"
 },
 "geometry": {"type": "Point", "coordinates": [-96.7898, 46.8772]}
 },
@@ -304,7 +321,7 @@ const casesGeoJSON = {
 "status": "Homicide",
 "ethnicity": "Indigenous",
 "note": "18-year-old vanished August 2019, Hardin, MT. Loved basketball; found dead after 12 days. Family criticized slow police response; case remains unsolved.",
-"source": "https://www.uihi.org/mmiw-database-overview/"
+"source": "https"
 },
 "geometry": {"type": "Point", "coordinates": [-107.6078, 45.7322]}
 },
@@ -318,7 +335,7 @@ const casesGeoJSON = {
 "status": "Missing",
 "ethnicity": "Indigenous",
 "note": "20-year-old vanished from Blackfeet Reservation, MT. Her case helped drive national awareness and legislative action.",
-"source": "https://www.fbi.gov/wanted/kidnap/ashley-loring-heavyrunner"
+"source": "https"
 },
 "geometry": {"type": "Point", "coordinates": [-112.84, 48.56]}
 },
@@ -332,7 +349,7 @@ const casesGeoJSON = {
 "status": "Homicide",
 "ethnicity": "Indigenous",
 "note": "31-year-old mother of three, vanished from Pinon, AZ. Remains found 2021. Case highlights jurisdictional issues between tribal and federal law.",
-"source": "https://www.fbi.gov/wanted/kidnap/jamie-lynette-yazzie"
+"source": "https"
 },
 "geometry": {"type": "Point", "coordinates": [-110.26, 35.58]}
 },
@@ -346,17 +363,32 @@ const casesGeoJSON = {
 "status": "Homicide",
 "ethnicity": "Two-Spirit",
 "note": "24-year-old Two-Spirit person murdered in Tulsa, OK. Case highlights the extreme danger faced by gender-diverse Indigenous people.",
-"source": "https://www.uihi.org/"
+"source": "https"
 },
 "geometry": {"type": "Point", "coordinates": [-95.99, 36.15]}
+},
+// == THIS IS THE NEW CASE ADDED ==
+{
+"type": "Feature",
+"properties": {
+"id": "mary",
+"name": "Mary Ellen Johnson-Davis",
+"tribe": "Tulalip Tribes",
+"year": 2020,
+"status": "Found",
+"ethnicity": "Indigenous",
+"note": "39-year-old member of the Tulalip Tribes, missing since Nov. 2020. Her remains were found in June 2025 and identified in Nov. 2025. Her case was featured in the 2024 documentary 'Missing From Fire Trail Road'.",
+"source": "https://www.fbi.gov/wanted/kidnap/mary-johnson-davis"
+},
+"geometry": {"type": "Point", "coordinates": [-122.286, 48.065]}
 }
+// == END OF NEW CASE ==
 ]
 };
 
 /* =========================
 Map initialization
 ========================= */
-// *** UPDATED ***: Centered on North America
 let map = L.map('map', { center: [45, -95], zoom: 4, minZoom: 3 });
 L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
 attribution: '&copy; <a href="https://carto.com/attributions">CARTO</a> | &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
@@ -415,9 +447,9 @@ const el = document.getElementById('chaptersList');
 el.innerHTML = '';
 const chapters = [
 {
-id: 'hotspots', // *** UPDATED ***
-title: 'Known Hotspots (BC, MT, AZ)', // *** UPDATED ***
-text: 'While the crisis is continental, specific areas like BC\'s Highway 16, and regions in Montana, Arizona, and New Mexico face acute clusters of cases.' // *** UPDATED ***
+id: 'hotspots', 
+title: 'Known Hotspots (BC, MT, AZ)', 
+text: 'While the crisis is continental, specific areas like BC\'s Highway 16, and regions in Montana, Arizona, and New Mexico face acute clusters of cases.' 
 },
 {
 id: 'systemic',
@@ -579,7 +611,7 @@ markerCluster.eachLayer(m => {
 if (m.feature && m.feature.geometry && m.feature.properties) {
 const p = m.feature.properties;
 const coords = m.feature.geometry.coordinates;
-rows.push([p.id || '', p.name || '', p.tribe || '', p.year || '', p.status || '', p.ethnicity || '', coords[1], coords[0], (p.note || '').replace(/[\n\r]/g, ' ').replace(/"/g, '""')]);
+rows.push([p.id || '', p.name || '', p.tribe || '', p.year || '', p.status || '', p.ethnicity || '', coords[1], coords[0], (p.note || '').replace(/[\n\r]/g, ' ').replace(/"/ag, '""')]);
 }
 });
 const csv = rows.map(r => r.map(cell => `"${('' + (cell || '')).replace(/"/g, '""')}"`).join(',')).join('\n');
