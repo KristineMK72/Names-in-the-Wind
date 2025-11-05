@@ -264,7 +264,7 @@ const casesGeoJSON = {
 "status": "Homicide",
 "ethnicity": "Indigenous",
 "note": "15-year-old vanished February 2008, Prince George, BC. Loved poetry; remains found October 2008 off Hwy 97. Slow police response criticized; sparked BC MMIWG plan.",
-"source": "https"
+"source": "https://highwayoftears.org/"
 },
 "geometry": {"type": "Point", "coordinates": [-122.7497, 53.9171]}
 },
@@ -292,7 +292,7 @@ const casesGeoJSON = {
 "status": "Homicide",
 "ethnicity": "Indigenous",
 "note": "15-year-old found in Red River, Winnipeg, MB, 2014. Loved dancing; child welfare failed her. Sparked 'Drag the Red' and national inquiry. Killer acquitted.",
-"source": "httpsics"
+"source": "https://www.cbc.ca/missingandmurdered/mmiw/profiles/tina-michelle-fontaine"
 },
 "geometry": {"type": "Point", "coordinates": [-97.13845, 49.89508]}
 },
@@ -307,7 +307,7 @@ const casesGeoJSON = {
 "status": "Homicide",
 "ethnicity": "Indigenous",
 "note": "22-year-old, pregnant, vanished August 2017, Fargo, ND. Loved her family; body found in river. Convictions secured; case led to Savanna’s Act for better data.",
-"source": "https"
+"source": "https://www.uihi.org/mmiw-database-overview/"
 },
 "geometry": {"type": "Point", "coordinates": [-96.7898, 46.8772]}
 },
@@ -321,7 +321,7 @@ const casesGeoJSON = {
 "status": "Homicide",
 "ethnicity": "Indigenous",
 "note": "18-year-old vanished August 2019, Hardin, MT. Loved basketball; found dead after 12 days. Family criticized slow police response; case remains unsolved.",
-"source": "https"
+"source": "https://www.uihi.org/mmiw-database-overview/"
 },
 "geometry": {"type": "Point", "coordinates": [-107.6078, 45.7322]}
 },
@@ -335,7 +335,7 @@ const casesGeoJSON = {
 "status": "Missing",
 "ethnicity": "Indigenous",
 "note": "20-year-old vanished from Blackfeet Reservation, MT. Her case helped drive national awareness and legislative action.",
-"source": "https"
+"source": "https://www.fbi.gov/wanted/kidnap/ashley-loring-heavyrunner"
 },
 "geometry": {"type": "Point", "coordinates": [-112.84, 48.56]}
 },
@@ -349,7 +349,7 @@ const casesGeoJSON = {
 "status": "Homicide",
 "ethnicity": "Indigenous",
 "note": "31-year-old mother of three, vanished from Pinon, AZ. Remains found 2021. Case highlights jurisdictional issues between tribal and federal law.",
-"source": "https"
+"source": "https://www.fbi.gov/wanted/kidnap/jamie-lynette-yazzie"
 },
 "geometry": {"type": "Point", "coordinates": [-110.26, 35.58]}
 },
@@ -363,11 +363,10 @@ const casesGeoJSON = {
 "status": "Homicide",
 "ethnicity": "Two-Spirit",
 "note": "24-year-old Two-Spirit person murdered in Tulsa, OK. Case highlights the extreme danger faced by gender-diverse Indigenous people.",
-"source": "https"
+"source": "https://www.uihi.org/"
 },
 "geometry": {"type": "Point", "coordinates": [-95.99, 36.15]}
 },
-// == THIS IS THE NEW CASE ADDED ==
 {
 "type": "Feature",
 "properties": {
@@ -382,7 +381,6 @@ const casesGeoJSON = {
 },
 "geometry": {"type": "Point", "coordinates": [-122.286, 48.065]}
 }
-// == END OF NEW CASE ==
 ]
 };
 
@@ -454,7 +452,7 @@ text: 'While the crisis is continental, specific areas like BC\'s Highway 16, an
 {
 id: 'systemic',
 title: 'Systemic Failures',
-text: 'Colonial policies, jurisdictional gaps, and underreporting (95% of U.S. cases missing from federal data) perpetuate injustice. NWAC pushes for 231 Calls for Justice.'
+text: 'Colonial policies, jurisdictional gaps, and underreporting (95% of U.s. cases missing from federal data) perpetuate injustice. NWAC pushes for 231 Calls for Justice.'
 },
 {
 id: 'two-spirit',
@@ -611,7 +609,7 @@ markerCluster.eachLayer(m => {
 if (m.feature && m.feature.geometry && m.feature.properties) {
 const p = m.feature.properties;
 const coords = m.feature.geometry.coordinates;
-rows.push([p.id || '', p.name || '', p.tribe || '', p.year || '', p.status || '', p.ethnicity || '', coords[1], coords[0], (p.note || '').replace(/[\n\r]/g, ' ').replace(/"/ag, '""')]);
+rows.push([p.id || '', p.name || '', p.tribe || '', p.year || '', p.status || '', p.ethnicity || '', coords[1], coords[0], (p.note || '').replace(/[\n\r]/g, ' ').replace(/"/g, '""')]);
 }
 });
 const csv = rows.map(r => r.map(cell => `"${('' + (cell || '')).replace(/"/g, '""')}"`).join(',')).join('\n');
