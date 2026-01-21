@@ -4,110 +4,69 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>MMIWG2S+ Story Map — North America</title>
+
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
-  <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
-  <script src="https://unpkg.com/leaflet.heat/dist/leaflet-heat.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-  <style>
-    :root {
-      --bg: #050505;
-      --panel: #0f0f10;
-      --card: #151516;
-      --muted: #bdbdbd;
-      --accent: #ff3b3b;
-      --accent-2: #ff7777;
-      --glass: rgba(255,255,255,0.03);
-    }
-    html, body { height: 100%; margin: 0; background: var(--bg); color: #eee; font-family: Inter, "Segoe UI", system-ui, Arial, sans-serif; }
-    #app { display: grid; grid-template-columns: 360px 1fr; height: 100vh; gap: 12px; padding: 12px; box-sizing: border-box; }
-    #sidebar { background: linear-gradient(180deg, var(--panel), #0a0a0a); border-radius: 10px; padding: 16px; box-shadow: 0 6px 24px rgba(0,0,0,0.6); overflow: auto; }
-    h1 { color: var(--accent); font-size: 18px; margin: 0 0 6px 0; }
-    p.lead { color: var(--muted); font-size: 13px; margin: 6px 0 14px 0; }
-    .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
-    .stat { background: var(--card); padding: 10px; border-radius: 8px; text-align: center; }
-    .stat h3 { margin: 0; font-size: 20px; color: var(--accent); }
-    .small { font-size: 12px; color: var(--muted); }
-    .controls { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
-    .btn { background: transparent; border: 1px solid rgba(255,255,255,0.06); color: #fff; padding: 8px 10px; border-radius: 8px; cursor: pointer; font-size: 13px; }
-    .filters { background: var(--card); padding: 10px; border-radius: 8px; margin-bottom: 12px; }
-    label { display: block; font-size: 12px; color: var(--muted); margin-bottom: 6px; }
-    input, select { width: 100%; padding: 8px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.04); background: transparent; color: #fff; }
-    .chapters { margin-top: 6px; }
-    .chapter { background: var(--glass); padding: 10px; border-radius: 8px; margin-bottom: 8px; cursor: pointer; }
-    .chapter h4 { margin: 0; color: var(--accent-2); }
-    footer { font-size: 12px; color: var(--muted); margin-top: 10px; }
-    #right { display: flex; flex-direction: column; gap: 12px; }
-    #mapWrap { position: relative; height: 100%; border-radius: 10px; overflow: hidden; box-shadow: 0 6px 24px rgba(0,0,0,0.6); }
-    #map { height: 100%; width: 100%; }
-    .legend { position: absolute; left: 12px; bottom: 12px; background: rgba(0,0,0,0.6); padding: 8px; border-radius: 8px; color: #fff; font-size: 12px; z-index: 999; }
-    .timeline { display: flex; gap: 8px; align-items: center; }
-    .timeline input[type=range] { flex: 1; }
-    .heat-toggle { position: absolute; right: 12px; top: 12px; z-index: 999; }
-    .popup-card { background: #0c0c0c; padding: 8px; border-radius: 8px; color: #fff; max-width: 280px; }
-    .big-overlay { position: absolute; inset: 0; pointer-events: none; z-index: 800; display: flex; align-items: flex-start; justify-content: flex-end; padding: 18px; }
-    .notice { max-width: 420px; background: rgba(0,0,0,0.65); backdrop-filter: blur(2px); padding: 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.03); font-size: 13px; color: var(--muted); }
-    
-    /* === THIS IS THE MOBILE FIX === */
-    @media(max-width:920px) { 
-      #app { 
-        grid-template-columns: 1fr; 
-        grid-template-rows: 60vh auto; /* Map row (60% screen height), then content row (auto height) */
-        height: auto; /* THIS IS THE KEY: Allows the whole page to scroll */
-      } 
-      #right { 
-        order: 1; 
-        height: 100%; /* Make sure map container fills its grid row */
-      }
-      #sidebar { 
-        order: 2; 
-        height: auto; /* Remove fixed height, let it be as tall as content */
-        overflow: visible; 
-      } 
-    }
-  </style>
+
+  <link rel="stylesheet" href="./assets/styles.css" />
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" defer></script>
+  <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js" defer></script>
+  <script src="https://unpkg.com/leaflet.heat/dist/leaflet-heat.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>
+
+  <script src="./assets/app.js" defer></script>
 </head>
+
 <body>
   <div id="app">
     <aside id="sidebar" aria-label="controls">
       <h1>MMIWG2S+ Story Map — North America</h1>
-      <p class="lead">A narrative exploration of Missing and Murdered Indigenous Women, Girls, Two-Spirit, Transgender, and Gender-Diverse People (MMIWG2S+). Use filters, play the timeline, and click chapters or markers for personal stories.</p>
-      
-      <div class="stats">
+      <p class="lead">
+        A narrative exploration of Missing and Murdered Indigenous Women, Girls, Two-Spirit, Transgender,
+        and Gender-Diverse People. Filter, explore, and click stories to learn more.
+      </p>
+
+      <div class="stats" aria-label="summary stats">
         <div class="stat">
-          <div class="small">Homicide Rate (Canada)</div>
-          <h3 id="indRate">12x</h3>
-          <div class="small">Higher for Indigenous Women</div>
+          <div class="small" id="statLeftLabel">Visible cases</div>
+          <h3 id="statLeftValue">—</h3>
+          <div class="small" id="statLeftNote">in current filters</div>
         </div>
         <div class="stat">
-          <div class="small">Unreported (U.S.)</div>
-          <h3 id="nonIndRate">95%</h3>
-          <div class="small">Missing from federal databases</div>
+          <div class="small" id="statRightLabel">Time range</div>
+          <h3 id="statRightValue">—</h3>
+          <div class="small" id="statRightNote">in current filters</div>
         </div>
       </div>
-      
-      <canvas id="rateChart" style="margin-bottom: 12px; max-height: 120px;"></canvas>
+
+      <canvas id="rateChart" style="margin-bottom: 12px; max-height: 140px;"></canvas>
 
       <div class="filters">
-        <label for="yearRange">Year (1970 - 2025)</label>
+        <label for="yearRange">Show cases up to year: <span id="yearLabel">—</span></label>
         <div class="timeline">
-          <input type="range" id="yearRange" min="1970" max="2025" value="2025" step="1">
+          <input type="range" id="yearRange" min="1900" max="2026" value="2026" step="1">
         </div>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px;">
-          <select id="ethFilter">
-            <option value="all">All ethnicities</option>
+
+        <div class="twoCol" style="margin-top: 8px;">
+          <select id="ethFilter" aria-label="ethnicity filter">
+            <option value="all">All</option>
             <option value="Indigenous">Indigenous</option>
-            <option value="Two-Spirit">Two-Spirit/Gender-Diverse</option>
+            <option value="Two-Spirit">Two-Spirit / Gender-Diverse</option>
             <option value="Unknown">Unknown</option>
           </select>
-          <select id="statusFilter">
+
+          <select id="statusFilter" aria-label="status filter">
             <option value="all">All statuses</option>
             <option value="Missing">Missing</option>
             <option value="Homicide">Homicide</option>
             <option value="Found">Found/Remains</option>
           </select>
+        </div>
+
+        <div style="margin-top: 8px;">
+          <input id="q" placeholder="Search name, nation/tribe, location…" />
         </div>
       </div>
 
@@ -120,555 +79,42 @@
       <div id="chaptersList" class="chapters"></div>
 
       <footer>
-        <p>Data from UIHI, NWAC, RCMP, and National Inquiry. Consult families before publishing sensitive details. <a href="https://www.nwac.ca/" target="_blank" style="color:var(--muted)">NWAC</a>, <a href="https://www.uihi.org/" target="_blank" style="color:var(--muted)">UIHI</a>.</p>
+        <p>
+          This map is educational and not exhaustive. Verify sources and consult families before publishing.
+          May 5 is recognized as a U.S. National Day of Awareness for MMIWR. :contentReference[oaicite:11]{index=11}
+        </p>
       </footer>
     </aside>
 
     <div id="right">
       <div id="mapWrap">
         <div id="map"></div>
-        
-        <div class="legend">
-          <div style="display:flex; align-items:center; margin-bottom: 4px;"><div style="width:10px; height:10px; background:rgba(255,68,68,0.95); border-radius:50%; margin-right:5px;"></div> Indigenous</div>
-          <div style="display:flex; align-items:center; margin-bottom: 4px;"><div style="width:10px; height:10px; background:rgba(255,165,0,0.95); border-radius:50%; margin-right:5px;"></div> Two-Spirit/Gender-Diverse</div>
-          <div style="display:flex; align-items:center;"><div style="width:10px; height:10px; background:rgba(200,200,200,0.85); border-radius:50%; margin-right:5px;"></div> Unknown/Other</div>
+
+        <div class="legend" aria-label="legend">
+          <div class="legendRow"><span class="dot dotInd"></span> Indigenous</div>
+          <div class="legendRow"><span class="dot dot2s"></span> Two-Spirit / Gender-Diverse</div>
+          <div class="legendRow"><span class="dot dotUnk"></span> Unknown/Other</div>
         </div>
 
         <div class="heat-toggle">
-           <label class="btn"><input type="checkbox" id="heatCB" style="vertical-align:middle; margin:0 4px 0 0;"> Heatmap</label>
+          <label class="btn">
+            <input type="checkbox" id="heatCB" style="vertical-align:middle; margin:0 6px 0 0;">
+            Heatmap
+          </label>
         </div>
 
         <div class="big-overlay">
-          <div class="notice">
+          <div class="notice" role="note" aria-label="ethics notice">
             <strong>Ethics & Data</strong>
-            <p>This map shares sensitive stories. Verify sources and obtain family consent before publishing. Respect all requests for removal.</p>
+            <p>
+              This project maps sensitive stories. Use reputable sources, avoid doxxing,
+              and honor correction/removal requests. Some databases include only subsets or active cases. :contentReference[oaicite:12]{index=12}
+            </p>
           </div>
         </div>
+
       </div>
     </div>
   </div>
-  
-<script>
-/* =========================
-Configuration / Data
-========================= */
-const casesGeoJSON = {
-"type": "FeatureCollection",
-"features": [
-// == Canadian Cases (Highway of Tears) ==
-{
-"type": "Feature",
-"properties": {
-"id": "helen",
-"name": "Helen Claire Frost",
-"tribe": "Lake Babine Nation",
-"year": 1970,
-"status": "Missing",
-"ethnicity": "Indigenous",
-"note": "Vanished October 20, 1970, after visiting friends in Prince George, BC. Loved music and dreamed of nursing. Family holds annual vigils; police dismissed as runaway. RCMP E-Pana case.",
-"source": "https://highwayoftears.org/"
-},
-"geometry": {"type": "Point", "coordinates": [-122.7497, 53.9171]}
-},
-{
-"type": "Feature",
-"properties": {
-"id": "jean",
-"name": "Jean Virginia Sampare",
-"tribe": "Gitxsan Nation",
-"year": 1971,
-"status": "Missing",
-"ethnicity": "Indigenous",
-"note": "Disappeared October 14, 1971, near Skeena River, Gitsegukla, BC. Loved art and community gatherings. Family insists foul play; case spurred 2006 Highway of Tears Symposium.",
-"source": "https://highwayoftears.org/"
-},
-"geometry": {"type": "Point", "coordinates": [-127.63, 55.25]}
-},
-{
-"type": "Feature",
-"properties": {
-"id": "monica",
-"name": "Monica Ignas",
-"tribe": "Tsilhqot’in Nation",
-"year": 1974,
-"status": "Homicide",
-"ethnicity": "Indigenous",
-"note": "14-year-old strangled, found April 1975 near Terrace, BC, after missing since December 1974. Known for her kindness; case stalled amid claims of police bias. E-Pana investigation.",
-"source": "https://highwayoftears.org/"
-},
-"geometry": {"type": "Point", "coordinates": [-128.52, 54.52]}
-},
-{
-"type": "Feature",
-"properties": {
-"id": "alberta",
-"name": "Alberta Gail Williams",
-"tribe": "Tsimshian Nation",
-"year": 1989,
-"status": "Homicide",
-"ethnicity": "Indigenous",
-"note": "Mother of two, strangled near Prince Rupert, BC, August 1989. Loved storytelling; family says she was vibrant. Unsolved; DNA pursued in 2020s. E-Pana case.",
-"source": "https://highwayoftears.org/"
-},
-"geometry": {"type": "Point", "coordinates": [-130.32, 54.31]}
-},
-{
-"type": "Feature",
-"properties": {
-"id": "delphine",
-"name": "Delphine Anne Camelia Nikal",
-"tribe": "Tsay Keh Dene Nation",
-"year": 1990,
-"status": "Found",
-"ethnicity": "Indigenous",
-"note": "15-year-old hitchhiked from Smithers, BC, June 1990. Loved animals; aspired to be a vet. Remains found 2022 near Prince George; cause unclear. Cousin also missing.",
-"source": "https://highwayoftears.org/"
-},
-"geometry": {"type": "Point", "coordinates": [-127.17, 54.78]}
-},
-{
-"type": "Feature",
-"properties": {
-"id": "ramona",
-"name": "Ramona Lisa Wilson",
-"tribe": "Wet’suwet’en Nation",
-"year": 1994,
-"status": "Homicide",
-"ethnicity": "Indigenous",
-"note": "16-year-old hitchhiked to a festival in Smithers, BC, June 1994. Dreamed of becoming a hairdresser. Remains found April 1995; unsolved. Family hosts memorial walks.",
-"source": "https://www.cbc.ca/missingandmurdered/mmiw/profiles/ramona-lisa-wilson"
-},
-"geometry": {"type": "Point", "coordinates": [-127.17, 54.78]}
-},
-{
-"type": "Feature",
-"properties": {
-"id": "tamara",
-"name": "Tamara Lynn Chipman",
-"tribe": "Wet’suwet’en and Cree",
-"year": 1998,
-"status": "Missing",
-"ethnicity": "Indigenous",
-"note": "22-year-old mother vanished September 1998, hitchhiking in Prince George, BC. Loved her son; struggled with addiction. Honored in 2025 billboards by Carrier Sekani.",
-"source": "https://highwayoftears.org/"
-},
-"geometry": {"type": "Point", "coordinates": [-122.7497, 53.9171]}
-},
-{
-"type": "Feature",
-"properties": {
-"id": "aielah",
-"name": "Aielah Saric Auger",
-"tribe": "St’át’imc Nation",
-"year": 2008,
-"status": "Homicide",
-"ethnicity": "Indigenous",
-"note": "15-year-old vanished February 2008, Prince George, BC. Loved poetry; remains found October 2008 off Hwy 97. Slow police response criticized; sparked BC MMIWG plan.",
-"source": "https://highwayoftears.org/"
-},
-"geometry": {"type": "Point", "coordinates": [-122.7497, 53.9171]}
-},
-{
-"type": "Feature",
-"properties": {
-"id": "amber",
-"name": "Amber Tuccaro",
-"tribe": "Mikisew Cree First Nation",
-"year": 2010,
-"status": "Homicide",
-"ethnicity": "Indigenous",
-"note": "20-year-old mother vanished August 2010 near Edmonton, AB. Loved singing; remains found 2012. Voice recording of suspect released; case unsolved.",
-"source": "https://www.cbc.ca/missingandmurdered/mmiw/profiles/amber-alyssa-tuccaro"
-},
-"geometry": {"type": "Point", "coordinates": [-113.4938, 53.5444]}
-},
-{
-"type": "Feature",
-"properties": {
-"id": "tina",
-"name": "Tina Fontaine",
-"tribe": "Anishinaabe",
-"year": 2014,
-"status": "Homicide",
-"ethnicity": "Indigenous",
-"note": "15-year-old found in Red River, Winnipeg, MB, 2014. Loved dancing; child welfare failed her. Sparked 'Drag the Red' and national inquiry. Killer acquitted.",
-"source": "https://www.cbc.ca/missingandmurdered/mmiw/profiles/tina-michelle-fontaine"
-},
-"geometry": {"type": "Point", "coordinates": [-97.13845, 49.89508]}
-},
-// == United States Cases ==
-{
-"type": "Feature",
-"properties": {
-"id": "savanna",
-"name": "Savanna LaFontaine-Greywind",
-"tribe": "Spirit Lake Tribe",
-"year": 2017,
-"status": "Homicide",
-"ethnicity": "Indigenous",
-"note": "22-year-old, pregnant, vanished August 2017, Fargo, ND. Loved her family; body found in river. Convictions secured; case led to Savanna’s Act for better data.",
-"source": "https://www.uihi.org/mmiw-database-overview/"
-},
-"geometry": {"type": "Point", "coordinates": [-96.7898, 46.8772]}
-},
-{
-"type": "Feature",
-"properties": {
-"id": "kaysera",
-"name": "Kaysera Stops Pretty Places",
-"tribe": "Crow Nation",
-"year": 2019,
-"status": "Homicide",
-"ethnicity": "Indigenous",
-"note": "18-year-old vanished August 2019, Hardin, MT. Loved basketball; found dead after 12 days. Family criticized slow police response; case remains unsolved.",
-"source": "https://www.uihi.org/mmiw-database-overview/"
-},
-"geometry": {"type": "Point", "coordinates": [-107.6078, 45.7322]}
-},
-{
-"type": "Feature",
-"properties": {
-"id": "ashley",
-"name": "Ashley Loring HeavyRunner",
-"tribe": "Blackfeet Nation",
-"year": 2017,
-"status": "Missing",
-"ethnicity": "Indigenous",
-"note": "20-year-old vanished from Blackfeet Reservation, MT. Her case helped drive national awareness and legislative action.",
-"source": "https://www.fbi.gov/wanted/kidnap/ashley-loring-heavyrunner"
-},
-"geometry": {"type": "Point", "coordinates": [-112.84, 48.56]}
-},
-{
-"type": "Feature",
-"properties": {
-"id": "jamie",
-"name": "Jamie Lynette Yazzie",
-"tribe": "Navajo Nation",
-"year": 2019,
-"status": "Homicide",
-"ethnicity": "Indigenous",
-"note": "31-year-old mother of three, vanished from Pinon, AZ. Remains found 2021. Case highlights jurisdictional issues between tribal and federal law.",
-"source": "https://www.fbi.gov/wanted/kidnap/jamie-lynette-yazzie"
-},
-"geometry": {"type": "Point", "coordinates": [-110.26, 35.58]}
-},
-{
-"type": "Feature",
-"properties": {
-"id": "makaela",
-"name": "Makaela (Mak) Fread",
-"tribe": "Potawatomi/Seminole",
-"year": 2022,
-"status": "Homicide",
-"ethnicity": "Two-Spirit",
-"note": "24-year-old Two-Spirit person murdered in Tulsa, OK. Case highlights the extreme danger faced by gender-diverse Indigenous people.",
-"source": "https://www.uihi.org/"
-},
-"geometry": {"type": "Point", "coordinates": [-95.99, 36.15]}
-},
-{
-"type": "Feature",
-"properties": {
-"id": "mary",
-"name": "Mary Ellen Johnson-Davis",
-"tribe": "Tulalip Tribes",
-"year": 2020,
-"status": "Found",
-"ethnicity": "Indigenous",
-"note": "39-year-old member of the Tulalip Tribes, missing since Nov. 2020. Her remains were found in June 2025 and identified in Nov. 2025. Her case was featured in the 2024 documentary 'Missing From Fire Trail Road'.",
-"source": "https://www.fbi.gov/wanted/kidnap/mary-johnson-davis"
-},
-"geometry": {"type": "Point", "coordinates": [-122.286, 48.065]}
-}
-]
-};
-
-/* =========================
-Map initialization
-========================= */
-let map = L.map('map', { center: [45, -95], zoom: 4, minZoom: 3 });
-L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-attribution: '&copy; <a href="https://carto.com/attributions">CARTO</a> | &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-}).addTo(map);
-const markerCluster = L.markerClusterGroup({ chunkedLoading: true, maxClusterRadius: 45 });
-const casesLayer = L.layerGroup();
-const heatPoints = [];
-map.addLayer(markerCluster);
-
-/* Helper: color by ethnicity */
-function colorForEth(eth) {
-if (!eth) return '#c8c8c8';
-const e = eth.toLowerCase();
-if (e.includes('indig')) return 'rgba(255,68,68,0.95)';
-if (e.includes('two-spirit') || e.includes('gender-diverse')) return 'rgba(255,165,0,0.95)';
-return 'rgba(200,200,200,0.85)';
-}
-
-/* Render features to map & UI */
-let allFeatures = [];
-async function renderCases() {
-allFeatures = casesGeoJSON.features.slice();
-markerCluster.clearLayers();
-casesLayer.clearLayers();
-heatPoints.length = 0;
-
-allFeatures.forEach(f => {
-const p = (f.geometry && f.geometry.coordinates) ? [f.geometry.coordinates[1], f.geometry.coordinates[0]] : null;
-const props = f.properties || {};
-if (!p) return;
-const col = colorForEth(props.ethnicity || 'unknown');
-const marker = L.circleMarker(p, { radius: 7, color: col, fillColor: col, fillOpacity: 0.95, weight: 1 });
-const popupHtml = `
-<div class="popup-card">
-<strong style="color:${col}">${props.name || 'Unknown'}</strong>
-<div style="font-size:12px;color:#bbb">${props.tribe ? props.tribe + ' • ' : ''}${props.year || ''} • ${props.status || ''}</div>
-<div style="margin-top:6px;font-size:13px;color:#ddd">${props.note || ''}</div>
-<div style="margin-top:8px"><a href="${props.source || '#'}" target="_blank" style="color:var(--accent)">Source</a></div>
-</div>`;
-marker.bindPopup(popupHtml);
-marker.on('click', () => { marker.openPopup(); scrollToChapter(props.id); });
-marker.feature = f;
-markerCluster.addLayer(marker);
-casesLayer.addLayer(marker);
-heatPoints.push([p[0], p[1], 1]);
-});
-
-map.addLayer(markerCluster);
-buildChaptersList(allFeatures);
-updateCounts();
-}
-
-/* Chapter UI & Story panning */
-function buildChaptersList(features) {
-const el = document.getElementById('chaptersList');
-el.innerHTML = '';
-const chapters = [
-{
-id: 'hotspots', 
-title: 'Known Hotspots (BC, MT, AZ)', 
-text: 'While the crisis is continental, specific areas like BC\'s Highway 16, and regions in Montana, Arizona, and New Mexico face acute clusters of cases.' 
-},
-{
-id: 'systemic',
-title: 'Systemic Failures',
-text: 'Colonial policies, jurisdictional gaps, and underreporting (95% of U.s. cases missing from federal data) perpetuate injustice. NWAC pushes for 231 Calls for Justice.'
-},
-{
-id: 'two-spirit',
-title: 'Two-Spirit & Gender-Diverse',
-text: '10–25% of MMIWG2S+ cases involve Two-Spirit/gender-diverse people, often overlooked. NWAC advocates for inclusive policies and safe spaces.'
-}
-];
-chapters.forEach(c => {
-const d = document.createElement('div');
-d.className = 'chapter';
-d.innerHTML = `<h4>${c.title}</h4><div style="font-size:13px;color:var(--muted)">${c.text}</div>`;
-d.onclick = () => {
-if (c.id === 'hotspots') map.flyTo([50.0, -118.0], 5, { duration: 1.2 });
-else if (c.id === 'systemic') map.flyTo([45, -95], 4, { duration: 1.2 });
-else if (c.id === 'two-spirit') map.flyTo([39.8, -98.5], 4, { duration: 1.2 });
-};
-el.appendChild(d);
-});
-
-if (features && features.length) {
-const header = document.createElement('div');
-header.style.margin = '8px 0 6px 0';
-header.style.color = 'var(--muted)';
-header.textContent = 'Personal Stories';
-el.appendChild(header);
-features.sort((a,b) => (a.properties.year || 0) - (b.properties.year || 0)).forEach(f => {
-const props = f.properties || {};
-const d = document.createElement('div');
-d.className = 'chapter';
-d.id = `chapter-${props.id}`;
-d.innerHTML = `<h4>${props.name || 'Unknown'} <span style="font-size:12px;color:var(--muted)">(${props.year || ''})</span></h4><div style="font-size:13px;color:var(--muted)">${(props.tribe ? props.tribe + ' • ' : '') + (props.status || '')}</div>`;
-d.onclick = () => {
-const coords = f.geometry.coordinates;
-map.flyTo([coords[1], coords[0]], 10, { duration: 1.0 });
-markerCluster.eachLayer(m => {
-if (m.feature && m.feature.properties && m.feature.properties.id === props.id) {
-// This timeout is a small hack to ensure popup opens *after* cluster zooms
-setTimeout(() => m.openPopup(), 300);
-}
-});
-d.scrollIntoView({ behavior: 'smooth' });
-};
-el.appendChild(d);
-});
-}
-}
-
-function scrollToChapter(id) {
-const chapter = document.getElementById(`chapter-${id}`);
-if (chapter) chapter.scrollIntoView({ behavior: 'smooth' });
-}
-
-/* Heatmap controls */
-let heatLayer = null;
-document.getElementById('heatCB').addEventListener('change', (e) => {
-if (e.target.checked) {
-if (heatLayer) map.addLayer(heatLayer);
-else { heatLayer = L.heatLayer(heatPoints, { radius: 25, blur: 30, maxZoom: 6, gradient: {0.4: 'blue', 0.6: 'lime', 1: 'red'} }); map.addLayer(heatLayer); }
-} else {
-if (heatLayer) map.removeLayer(heatLayer);
-}
-});
-
-/* Filtering & timeline */
-function updateCounts() {
-const visibleFeatures = [];
-markerCluster.eachLayer(m => {
-    if(m.feature) visibleFeatures.push(m.feature);
-});
-
-const indigenousCount = visibleFeatures.filter(f => (f.properties.ethnicity || '').toLowerCase().includes('indig')).length;
-const twoSpiritCount = visibleFeatures.filter(f => (f.properties.ethnicity || '').toLowerCase().includes('two-spirit')).length;
-const otherCount = visibleFeatures.length - indigenousCount - twoSpiritCount;
-
-// Update the stat boxes based on the *filtered* view
-document.getElementById('indRate').textContent = `${indigenousCount}`;
-document.getElementById('indRate').nextElementSibling.textContent = 'Indigenous Cases';
-document.getElementById('nonIndRate').textContent = `${twoSpiritCount + otherCount}`;
-document.getElementById('nonIndRate').nextElementSibling.textContent = 'Two-Spirit & Other';
-}
-
-function applyFilters() {
-const yearMax = parseInt(document.getElementById('yearRange').value, 10);
-const eth = document.getElementById('ethFilter').value;
-const status = document.getElementById('statusFilter').value;
-
-markerCluster.clearLayers();
-heatPoints.length = 0;
-
-allFeatures.forEach(f => {
-const props = f.properties || {};
-const year = props.year ? parseInt(props.year, 10) : null;
-if (year && year > yearMax) return;
-if (eth !== 'all') {
-if (props.ethnicity !== eth) return;
-}
-if (status !== 'all') {
-if (props.status !== status) return;
-}
-
-const coords = f.geometry.coordinates;
-const p = [coords[1], coords[0]];
-const col = colorForEth(props.ethnicity || 'Unknown');
-const marker = L.circleMarker(p, { radius: 7, color: col, fillColor: col, fillOpacity: 0.95, weight: 1 })
-.bindPopup(`<div class="popup-card"><strong style="color:${col}">${props.name || 'Unknown'}</strong><div style="font-size:12px;color:#bbb">${props.tribe || ''} ${props.year ? (' • ' + props.year) : ''}</div><div style="margin-top:6px;color:#ddd">${props.note || ''}</div></div>`);
-marker.feature = f;
-markerCluster.addLayer(marker);
-heatPoints.push([p[0], p[1], 1]);
-});
-
-if (document.getElementById('heatCB').checked) {
-if (heatLayer) map.removeLayer(heatLayer);
-heatLayer = L.heatLayer(heatPoints, { radius: 25, blur: 30, maxZoom: 6, gradient: {0.4: 'blue', 0.6: 'lime', 1: 'red'} });
-map.addLayer(heatLayer);
-}
-updateCounts(); // Update counts after filtering
-}
-
-/* Timeline play */
-let playInterval = null;
-document.getElementById('playBtn').addEventListener('click', () => {
-const slider = document.getElementById('yearRange');
-if (playInterval) {
-clearInterval(playInterval);
-playInterval = null;
-document.getElementById('playBtn').textContent = '▶ Play timeline';
-} else {
-document.getElementById('playBtn').textContent = '⏸ Pause';
-playInterval = setInterval(() => {
-let v = parseInt(slider.value, 10);
-if (v >= parseInt(slider.max, 10)) { v = parseInt(slider.min, 10); }
-v += 1;
-slider.value = v;
-applyFilters();
-}, 650);
-}
-});
-
-document.getElementById('yearRange').addEventListener('input', applyFilters);
-document.getElementById('ethFilter').addEventListener('change', applyFilters);
-document.getElementById('statusFilter').addEventListener('change', applyFilters);
-document.getElementById('resetBtn').addEventListener('click', () => {
-map.setView([45, -95], 4);
-document.getElementById('yearRange').value = 2025;
-document.getElementById('ethFilter').value = 'all';
-document.getElementById('statusFilter').value = 'all';
-applyFilters();
-});
-
-/* Download filtered CSV */
-document.getElementById('downloadBtn').addEventListener('click', () => {
-const rows = [['id', 'name', 'tribe', 'year', 'status', 'ethnicity', 'lat', 'lon', 'note']];
-markerCluster.eachLayer(m => {
-if (m.feature && m.feature.geometry && m.feature.properties) {
-const p = m.feature.properties;
-const coords = m.feature.geometry.coordinates;
-rows.push([p.id || '', p.name || '', p.tribe || '', p.year || '', p.status || '', p.ethnicity || '', coords[1], coords[0], (p.note || '').replace(/[\n\r]/g, ' ').replace(/"/g, '""')]);
-}
-});
-const csv = rows.map(r => r.map(cell => `"${('' + (cell || '')).replace(/"/g, '""')}"`).join(',')).join('\n');
-const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-const url = URL.createObjectURL(blob);
-const a = document.createElement('a');
-a.href = url;
-a.download = 'mmiwg2s_filtered.csv';
-a.click();
-URL.revokeObjectURL(url);
-});
-
-/* Chart initialization */
-function initChart() {
-// Reset stats to their "global" meaning
-document.getElementById('indRate').textContent = '12x';
-document.getElementById('indRate').nextElementSibling.textContent = 'Higher Rate (Canada)';
-document.getElementById('nonIndRate').textContent = '95%';
-document.getElementById('nonIndRate').nextElementSibling.textContent = 'Unreported (U.S.)';
-
-// Draw the bar chart
-const ctx = document.getElementById('rateChart').getContext('2d');
-new Chart(ctx, {
-type: "bar",
-data: {
-labels: ["Indigenous Women", "Non-Indigenous Women"],
-datasets: [{
-label: "Homicide Rate per 100k (Canada, 2019)",
-data: [4.31, 0.36],
-backgroundColor: ["rgba(255,68,68,0.95)", "rgba(102,178,255,0.95)"],
-borderRadius: 6
-}]
-},
-options: {
-responsive: true,
-maintainAspectRatio: false,
-plugins: { legend: { display: false } },
-scales: {
-y: {
-beginAtZero: true,
-title: { display: true, text: "Rate per 100k", color: '#999' },
-ticks: { color: '#999' },
-grid: { color: 'rgba(255,255,255,0.05)' }
-},
-x: {
-ticks: { color: '#999' },
-grid: { display: false }
-}
-}
-}
-});
-}
-
-/* Boot sequence */
-(async function boot() {
-initChart();
-await renderCases();
-applyFilters(); // Apply default filters on load
-})();
-</script>
 </body>
 </html>
