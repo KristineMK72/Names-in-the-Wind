@@ -11,7 +11,10 @@
   <meta property="og:title" content="Names in the Wind — MMIWG2S+ Tribute & Learning" />
   <meta property="og:description" content="A tribute and educational tool honoring MMIWG2S+ and supporting awareness, research, and action." />
   <meta property="og:type" content="website" />
-  <meta property="og:image" content="/Names-in-the-Wind/og-thumbnail.png" />
+  <meta property="og:url" content="https://names-in-the-wind.vercel.app/" />
+
+  <meta property="og:image" content="https://names-in-the-wind.vercel.app/og-thumbnail.png" />
+  <meta property="og:image:secure_url" content="https://names-in-the-wind.vercel.app/og-thumbnail.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta property="og:image:alt" content="Names in the Wind — A Tribute to MMIWG2S+" />
@@ -20,7 +23,7 @@
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Names in the Wind — MMIWG2S+ Tribute & Learning" />
   <meta name="twitter:description" content="A respectful tribute and educational resource honoring MMIWG2S+." />
-  <meta name="twitter:image" content="/Names-in-the-Wind/og-thumbnail.png" />
+  <meta name="twitter:image" content="https://names-in-the-wind.vercel.app/og-thumbnail.png" />
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -29,13 +32,11 @@
 
   <!-- Styles & App -->
   <link rel="stylesheet" href="./styles.css" />
-
-  <!-- Data first, then logic -->
   <script defer src="./cases.js"></script>
   <script defer src="./app.js"></script>
 
   <!-- Favicon -->
-  <link rel="icon" href="/Names-in-the-Wind/og-thumbnail.png" type="image/png" />
+  <link rel="icon" href="/og-thumbnail.png" type="image/png" />
 </head>
 
 <body>
@@ -43,7 +44,7 @@
 
   <header class="topbar" aria-label="Top navigation">
     <div class="wrap topbar__inner">
-      <div class="brand">
+      <div class="brand" aria-label="Names in the Wind">
         <div class="brand__mark" aria-hidden="true"></div>
         <div class="brand__text">
           <div class="brand__title">Names in the Wind</div>
@@ -74,7 +75,9 @@
 
         <h1 class="hero__title">
           Honoring <span class="accent">MMIWG2S+</span>
-          <span class="hero__titleSub">Missing & Murdered Indigenous Women, Girls, Two-Spirit, Transgender, and Gender-Diverse People</span>
+          <span class="hero__titleSub">
+            Missing & Murdered Indigenous Women, Girls, Two-Spirit, Transgender, and Gender-Diverse People
+          </span>
         </h1>
 
         <p class="lede">
@@ -90,7 +93,7 @@
 
         <div class="hero__meta">
           <div class="pill">Scope: <strong>United States • Canada • Mexico</strong></div>
-          <div class="pill">Language: <strong>Respectful, family-centered</strong></div>
+          <div class="pill">Approach: <strong>Respectful, family-centered</strong></div>
           <div class="pill">Updated: <strong><span id="lastUpdated">January 2026</span></strong></div>
         </div>
       </div>
@@ -166,9 +169,7 @@
             MMIWG2S+ refers to Missing and Murdered Indigenous Women, Girls, Two-Spirit, Transgender, and Gender-Diverse people.
             The crisis affects Indigenous communities across North America.
           </p>
-          <div class="quote">
-            “No data point is bigger than a life.”
-          </div>
+          <div class="quote">“No data point is bigger than a life.”</div>
         </article>
 
         <article class="panel">
@@ -182,7 +183,7 @@
         </article>
 
         <article class="panel">
-          <h3>How this site uses data</h3>
+          <h3>What this site is (and isn’t)</h3>
           <p class="muted">
             Entries reflect publicly available sources. This is not exhaustive. The goal is education and remembrance—never
             sensationalism.
@@ -210,6 +211,7 @@
       <div class="grid2">
         <div class="panel">
           <h3>Included in this build</h3>
+
           <div class="stats">
             <div class="stat">
               <div class="stat__label">Cases shown</div>
@@ -235,12 +237,12 @@
         </div>
 
         <div class="panel" id="methodology">
-          <h3>Methodology (short)</h3>
+          <h3>Methodology</h3>
           <ul class="bullets">
             <li>Cases are entered from publicly available sources and listed per card.</li>
             <li>Some fields are unknown or not publicly released; those values remain blank or “Unknown.”</li>
             <li>Language is factual and family-centered, avoiding speculation or graphic detail.</li>
-            <li>Removal requests are honored and changes are logged through repository history.</li>
+            <li>Removal requests are honored and changes are tracked through repository history.</li>
           </ul>
         </div>
       </div>
