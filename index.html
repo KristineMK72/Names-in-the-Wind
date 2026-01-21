@@ -3,118 +3,310 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>MMIWG2S+ Story Map — North America</title>
+  <title>Names in the Wind — MMIWG2S+ Tribute & Learning</title>
+  <meta name="description" content="A tribute and educational resource honoring Missing and Murdered Indigenous Women, Girls, Two-Spirit, Transgender, and Gender-Diverse People across North America." />
 
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
-  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
+  <meta property="og:title" content="Names in the Wind — MMIWG2S+ Tribute & Learning" />
+  <meta property="og:description" content="A tribute and educational tool honoring MMIWG2S+ and supporting awareness, research, and action." />
+  <meta property="og:type" content="website" />
 
-  <link rel="stylesheet" href="./assets/styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
 
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" defer></script>
-  <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js" defer></script>
-  <script src="https://unpkg.com/leaflet.heat/dist/leaflet-heat.js" defer></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>
-
-  <script src="./assets/app.js" defer></script>
+  <link rel="stylesheet" href="./styles.css" />
+  <script defer src="./app.js"></script>
 </head>
 
 <body>
-  <div id="app">
-    <aside id="sidebar" aria-label="controls">
-      <h1>MMIWG2S+ Story Map — North America</h1>
-      <p class="lead">
-        A narrative exploration of Missing and Murdered Indigenous Women, Girls, Two-Spirit, Transgender,
-        and Gender-Diverse People. Filter, explore, and click stories to learn more.
-      </p>
+  <a class="skip" href="#main">Skip to content</a>
 
-      <div class="stats" aria-label="summary stats">
-        <div class="stat">
-          <div class="small" id="statLeftLabel">Visible cases</div>
-          <h3 id="statLeftValue">—</h3>
-          <div class="small" id="statLeftNote">in current filters</div>
-        </div>
-        <div class="stat">
-          <div class="small" id="statRightLabel">Time range</div>
-          <h3 id="statRightValue">—</h3>
-          <div class="small" id="statRightNote">in current filters</div>
+  <header class="topbar" aria-label="Top navigation">
+    <div class="wrap topbar__inner">
+      <div class="brand">
+        <div class="brand__mark" aria-hidden="true"></div>
+        <div class="brand__text">
+          <div class="brand__title">Names in the Wind</div>
+          <div class="brand__sub">MMIWG2S+ Tribute & Education</div>
         </div>
       </div>
 
-      <canvas id="rateChart" style="margin-bottom: 12px; max-height: 140px;"></canvas>
+      <nav class="nav" aria-label="Site">
+        <a href="#remember">Remember</a>
+        <a href="#learn">Learn</a>
+        <a href="#data">Data</a>
+        <a href="#resources">Resources</a>
+        <a href="#act">Act</a>
+      </nav>
 
-      <div class="filters">
-        <label for="yearRange">Show cases up to year: <span id="yearLabel">—</span></label>
-        <div class="timeline">
-          <input type="range" id="yearRange" min="1900" max="2026" value="2026" step="1">
+      <div class="topbar__actions">
+        <button class="btn btn--ghost" id="shareBtn" type="button">Copy share link</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main" class="wrap">
+    <section class="hero" aria-label="Hero">
+      <div class="hero__veil" aria-hidden="true"></div>
+
+      <div class="hero__content">
+        <div class="kicker">A living tribute across North America</div>
+
+        <h1 class="hero__title">
+          Honoring <span class="accent">MMIWG2S+</span>
+          <span class="hero__titleSub">Missing & Murdered Indigenous Women, Girls, Two-Spirit, Transgender, and Gender-Diverse People</span>
+        </h1>
+
+        <p class="lede">
+          This space exists to remember lives, share context, and support learning with care.
+          Names belong to families and communities—always prioritize consent, dignity, and truth.
+        </p>
+
+        <div class="hero__cta">
+          <a class="btn btn--primary" href="#remember">Enter the tribute</a>
+          <a class="btn" href="#learn">Learn the crisis</a>
+          <a class="btn btn--ghost" href="#resources">Find resources</a>
         </div>
 
-        <div class="twoCol" style="margin-top: 8px;">
-          <select id="ethFilter" aria-label="ethnicity filter">
-            <option value="all">All</option>
-            <option value="Indigenous">Indigenous</option>
-            <option value="Two-Spirit">Two-Spirit / Gender-Diverse</option>
-            <option value="Unknown">Unknown</option>
-          </select>
+        <div class="hero__meta">
+          <div class="pill">Scope: <strong>United States • Canada • Mexico</strong></div>
+          <div class="pill">Language: <strong>Respectful, family-centered</strong></div>
+          <div class="pill">Updated: <strong><span id="lastUpdated">January 2026</span></strong></div>
+        </div>
+      </div>
 
-          <select id="statusFilter" aria-label="status filter">
-            <option value="all">All statuses</option>
+      <aside class="ethics" aria-label="Ethics notice">
+        <div class="ethics__title">Data with care</div>
+        <p class="ethics__text">
+          This project includes sensitive information. Verify sources. Seek family consent before publishing personal details.
+          Honor requests for removal and avoid speculation.
+        </p>
+        <div class="ethics__actions">
+          <a class="chip" href="#resources">Support & reporting</a>
+          <a class="chip" href="#methodology">Methodology</a>
+        </div>
+      </aside>
+    </section>
+
+    <section id="remember" class="section">
+      <div class="section__head">
+        <h2>Remember</h2>
+        <p class="muted">A respectful gallery of names and stories (as shared publicly). Click a card for details.</p>
+      </div>
+
+      <div class="controls" aria-label="Filters">
+        <label class="field">
+          <span>Search</span>
+          <input id="q" type="search" placeholder="Search by name, Nation/Tribe, city…" />
+        </label>
+
+        <label class="field">
+          <span>Status</span>
+          <select id="status">
+            <option value="all">All</option>
             <option value="Missing">Missing</option>
             <option value="Homicide">Homicide</option>
             <option value="Found">Found/Remains</option>
           </select>
-        </div>
+        </label>
 
-        <div style="margin-top: 8px;">
-          <input id="q" placeholder="Search name, nation/tribe, location…" />
-        </div>
+        <label class="field">
+          <span>Identity</span>
+          <select id="identity">
+            <option value="all">All</option>
+            <option value="Indigenous">Indigenous</option>
+            <option value="Two-Spirit">Two-Spirit / Gender-Diverse</option>
+            <option value="Unknown">Unknown / Not specified</option>
+          </select>
+        </label>
+
+        <label class="field">
+          <span>Year</span>
+          <select id="year">
+            <option value="all">All years</option>
+          </select>
+        </label>
+
+        <button class="btn" id="downloadBtn" type="button">Download filtered CSV</button>
       </div>
 
-      <div class="controls">
-        <button id="playBtn" class="btn">▶ Play timeline</button>
-        <button id="resetBtn" class="btn">Reset view</button>
-        <button id="downloadBtn" class="btn">Download filtered CSV</button>
+      <div class="grid" id="cards" aria-label="Case cards"></div>
+    </section>
+
+    <section id="learn" class="section">
+      <div class="section__head">
+        <h2>Learn</h2>
+        <p class="muted">What MMIWG2S+ means, why it happens, and why accurate counts are difficult.</p>
       </div>
 
-      <div id="chaptersList" class="chapters"></div>
+      <div class="grid2">
+        <article class="panel">
+          <h3>What is MMIWG2S+?</h3>
+          <p class="muted">
+            MMIWG2S+ refers to Missing and Murdered Indigenous Women, Girls, Two-Spirit, Transgender, and Gender-Diverse people.
+            The crisis affects Indigenous communities across North America.
+          </p>
+          <div class="quote">
+            “No data point is bigger than a life.”
+          </div>
+        </article>
 
-      <footer>
-        <p>
-          This map is educational and not exhaustive. Verify sources and consult families before publishing.
-          May 5 is recognized as a U.S. National Day of Awareness for MMIWR. :contentReference[oaicite:11]{index=11}
-        </p>
-      </footer>
-    </aside>
+        <article class="panel">
+          <h3>Why complete lists are hard</h3>
+          <ul class="bullets">
+            <li>Underreporting and inconsistent record-keeping</li>
+            <li>Racial misclassification and missing tribal affiliation</li>
+            <li>Jurisdictional gaps across tribal/state/federal/local systems</li>
+            <li>Fragmented databases and differing definitions</li>
+          </ul>
+        </article>
 
-    <div id="right">
-      <div id="mapWrap">
-        <div id="map"></div>
+        <article class="panel">
+          <h3>How this site uses data</h3>
+          <p class="muted">
+            Entries reflect publicly available sources. This is not exhaustive. The goal is education and remembrance—never
+            sensationalism.
+          </p>
+          <a class="inlineLink" href="#methodology">Read methodology & sources →</a>
+        </article>
 
-        <div class="legend" aria-label="legend">
-          <div class="legendRow"><span class="dot dotInd"></span> Indigenous</div>
-          <div class="legendRow"><span class="dot dot2s"></span> Two-Spirit / Gender-Diverse</div>
-          <div class="legendRow"><span class="dot dotUnk"></span> Unknown/Other</div>
-        </div>
+        <article class="panel">
+          <h3>Awareness</h3>
+          <p class="muted">
+            May 5 is widely observed as a National Day of Awareness for MMIWG2S+. Local vigils and remembrance walks are held
+            throughout the year.
+          </p>
+          <div class="callout">Wear red. Listen to families. Share verified resources.</div>
+        </article>
+      </div>
+    </section>
 
-        <div class="heat-toggle">
-          <label class="btn">
-            <input type="checkbox" id="heatCB" style="vertical-align:middle; margin:0 6px 0 0;">
-            Heatmap
-          </label>
-        </div>
+    <section id="data" class="section">
+      <div class="section__head">
+        <h2>Data</h2>
+        <p class="muted">A transparent view of what’s included, and what may be missing.</p>
+      </div>
 
-        <div class="big-overlay">
-          <div class="notice" role="note" aria-label="ethics notice">
-            <strong>Ethics & Data</strong>
-            <p>
-              This project maps sensitive stories. Use reputable sources, avoid doxxing,
-              and honor correction/removal requests. Some databases include only subsets or active cases. :contentReference[oaicite:12]{index=12}
-            </p>
+      <div class="grid2">
+        <div class="panel">
+          <h3>Included in this build</h3>
+          <div class="stats">
+            <div class="stat">
+              <div class="stat__label">Cases shown</div>
+              <div class="stat__value" id="statCases">—</div>
+            </div>
+            <div class="stat">
+              <div class="stat__label">Missing</div>
+              <div class="stat__value" id="statMissing">—</div>
+            </div>
+            <div class="stat">
+              <div class="stat__label">Homicide</div>
+              <div class="stat__value" id="statHomicide">—</div>
+            </div>
+            <div class="stat">
+              <div class="stat__label">Found/Remains</div>
+              <div class="stat__value" id="statFound">—</div>
+            </div>
+          </div>
+
+          <div class="callout">
+            Counts reflect entries loaded into this site—not the full scope of the crisis.
           </div>
         </div>
 
+        <div class="panel" id="methodology">
+          <h3>Methodology (short)</h3>
+          <ul class="bullets">
+            <li>Sources are listed per case card.</li>
+            <li>Some fields may be unknown or not publicly released.</li>
+            <li>Language aims to remain factual and family-centered.</li>
+            <li>Removal requests are honored.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="resources" class="section">
+      <div class="section__head">
+        <h2>Resources</h2>
+        <p class="muted">Public databases, task forces, and organizations supporting families and advocacy.</p>
+      </div>
+
+      <div class="grid2">
+        <div class="panel">
+          <h3>Databases</h3>
+          <ul class="links">
+            <li><a href="https://www.sovereign-bodies.org/" target="_blank" rel="noopener">Sovereign Bodies Institute (SBI)</a></li>
+            <li><a href="https://www.bia.gov/service/mmu/missing-murdered-cases" target="_blank" rel="noopener">BIA Missing & Murdered Unit</a></li>
+            <li><a href="https://www.cbc.ca/missingandmurdered/" target="_blank" rel="noopener">CBC Missing & Murdered (Canada)</a></li>
+            <li><a href="https://www.uihi.org/resources/missing-and-murdered-indigenous-women-girls/" target="_blank" rel="noopener">UIHI Report & Resources</a></li>
+            <li><a href="https://namus.nij.ojp.gov/" target="_blank" rel="noopener">NamUs (US)</a></li>
+          </ul>
+        </div>
+
+        <div class="panel">
+          <h3>Support & action</h3>
+          <ul class="links">
+            <li><a href="https://www.niwrc.org/" target="_blank" rel="noopener">National Indigenous Women’s Resource Center</a></li>
+            <li><a href="#act">Ways to help</a></li>
+          </ul>
+          <div class="callout">
+            If you have information about a case, contact local law enforcement or relevant tip lines.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="act" class="section">
+      <div class="section__head">
+        <h2>Act</h2>
+        <p class="muted">Share responsibly, support families, and keep attention on verified information.</p>
+      </div>
+
+      <div class="grid2">
+        <div class="panel">
+          <h3>Share responsibly</h3>
+          <ul class="bullets">
+            <li>Use verified sources</li>
+            <li>Respect family wishes and privacy</li>
+            <li>Avoid speculation and graphic details</li>
+            <li>Amplify Indigenous-led organizations</li>
+          </ul>
+        </div>
+
+        <div class="panel">
+          <h3>Contribute (optional)</h3>
+          <p class="muted">
+            This project can accept corrections or source additions. Contributions should prioritize consent and verification.
+          </p>
+          <a class="btn btn--primary" href="#" id="contributeBtn">Open contribution guide</a>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="wrap footer__inner">
+        <div class="footer__left">
+          <div class="footer__title">Names in the Wind</div>
+          <div class="footer__sub">A tribute and educational tool • MMIWG2S+</div>
+        </div>
+        <div class="footer__right">
+          <a href="#main">Top</a>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Modal -->
+    <div class="modal" id="modal" aria-hidden="true">
+      <div class="modal__backdrop" data-close="1"></div>
+      <div class="modal__card" role="dialog" aria-modal="true" aria-label="Case details">
+        <div class="modal__head">
+          <div class="modal__title" id="modalTitle">—</div>
+          <button class="btn btn--ghost" data-close="1" type="button">Close</button>
+        </div>
+        <div class="modal__body" id="modalBody"></div>
       </div>
     </div>
-  </div>
+  </main>
 </body>
 </html>
