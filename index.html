@@ -3,18 +3,36 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#0b0b0f" />
   <title>Names in the Wind — MMIWG2S+ Tribute & Learning</title>
-  <meta name="description" content="A tribute and educational resource honoring Missing and Murdered Indigenous Women, Girls, Two-Spirit, Transgender, and Gender-Diverse People across North America." />
+
+  <meta
+    name="description"
+    content="A tribute and educational resource honoring Missing and Murdered Indigenous Women, Girls, Two-Spirit, Transgender, and Gender-Diverse People across North America."
+  />
 
   <meta property="og:title" content="Names in the Wind — MMIWG2S+ Tribute & Learning" />
-  <meta property="og:description" content="A tribute and educational tool honoring MMIWG2S+ and supporting awareness, research, and action." />
+  <meta
+    property="og:description"
+    content="A tribute and educational tool honoring MMIWG2S+ and supporting awareness, research, and action."
+  />
   <meta property="og:type" content="website" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Names in the Wind — MMIWG2S+ Tribute & Learning" />
+  <meta
+    name="twitter:description"
+    content="A tribute and educational tool honoring MMIWG2S+ and supporting awareness, research, and action."
+  />
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="./styles.css" />
+
+  <!-- Data first, then logic -->
+  <script defer src="./cases.js"></script>
   <script defer src="./app.js"></script>
 </head>
 
@@ -97,7 +115,7 @@
       <div class="controls" aria-label="Filters">
         <label class="field">
           <span>Search</span>
-          <input id="q" type="search" placeholder="Search by name, Nation/Tribe, city…" />
+          <input id="q" type="search" placeholder="Search by name, Nation/Tribe, city…" autocomplete="off" />
         </label>
 
         <label class="field">
@@ -217,10 +235,10 @@
         <div class="panel" id="methodology">
           <h3>Methodology (short)</h3>
           <ul class="bullets">
-            <li>Sources are listed per case card.</li>
-            <li>Some fields may be unknown or not publicly released.</li>
-            <li>Language aims to remain factual and family-centered.</li>
-            <li>Removal requests are honored.</li>
+            <li>Cases are entered from publicly available sources and listed per card.</li>
+            <li>Some fields are unknown or not publicly released; those values remain blank or “Unknown.”</li>
+            <li>Language is factual and family-centered, avoiding speculation or graphic detail.</li>
+            <li>Removal requests are honored and changes are logged through repository history.</li>
           </ul>
         </div>
       </div>
