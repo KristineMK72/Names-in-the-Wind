@@ -1,0 +1,19 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "tina-fontaine",
+        "name": "Tina Fontaine",
+        "tribe": "Anishinaabe",
+        "year": 2014,
+        "status": "Homicide",
+        "ethnicity": "Indigenous",
+        "note": "15-year-old found in Red River, Winnipeg, MB (2014). Case helped spur national attention and advocacy.",
+        "source": "https://www.cbc.ca/missingandmurdered/mmiw/profiles/tina-michelle-fontaine"
+      },
+      "geometry": { "type": "Point", "coordinates": [-97.13845, 49.89508] }
+    }
+  ]
+}
